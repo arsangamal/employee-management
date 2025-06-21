@@ -14,7 +14,7 @@ import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { deleteEmployeeAction } from "./actions/delete-employee";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 export const EmployeeColumns: ColumnDef<Employee>[] = [
     {
@@ -61,8 +61,8 @@ export const EmployeeColumns: ColumnDef<Employee>[] = [
                             <DeleteDialog action={(event) => {
                                 event.preventDefault();
                                 deleteEmployeeAction(employee.id).then((data) => {
-                                    toast(data.message)
-                                    redirect("/employee");
+                                    toast(data.message ?? data)
+                                    window.location.reload();
                                 });
                             }} text={`Delete ${employee.name}`} />
                         </DropdownMenuItem>
