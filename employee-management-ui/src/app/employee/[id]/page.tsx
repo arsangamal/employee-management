@@ -40,8 +40,8 @@ export default function UpdateEmployee() {
         defaultValues: {
             name: "",
             email: "",
-            roleId: 1,
-            departmentId: 1,
+            roleId: -1,
+            departmentId: -1,
         },
     })
 
@@ -81,18 +81,21 @@ export default function UpdateEmployee() {
         async function fetchEmployee() {
             try {
                 const response = await getSpecificEmployeeAction(params.id);
-                form.reset({
-                    name: response.data.name,
-                    email: response.data.email,
-                    roleId: response.data.role.id,
-                    departmentId: response.data.department.id,
-                });
+                console.log({ response })
+
+                form.setValue("name", response.data.name);
+                form.setValue("email", response.data.email);
+                form.setValue("roleId", parseInt(response.data.role.id));
+                form.setValue("departmentId", parseInt(response.data.department.id));
             } catch (error) {
                 console.error("Error fetching employee:", error);
             }
         }
 
-        Promise.allSettled([fetchRoles(), fetchDepartments(), fetchEmployee()])
+        Promise.allSettled([fetchRoles(), fetchDepartments()]).then(() => {
+            fetchEmployee();
+        });
+
     }, [params.id, form]);
 
     return (
@@ -138,6 +141,7 @@ export default function UpdateEmployee() {
                                     <Select
                                         onValueChange={value => field.onChange(Number(value))}
                                         defaultValue={String(field.value)}
+                                        value={String(field.value)}
                                     >
                                         <FormControl className="w-full">
                                             <SelectTrigger>
@@ -158,13 +162,14 @@ export default function UpdateEmployee() {
                         />
                         <FormField
                             control={form.control}
-                            name="roleId"
+                            name="departmentId"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Department</FormLabel>
                                     <Select
                                         onValueChange={value => field.onChange(Number(value))}
                                         defaultValue={String(field.value)}
+                                        value={String(field.value)}
                                     >
                                         <FormControl className="w-full">
                                             <SelectTrigger>

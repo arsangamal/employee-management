@@ -135,7 +135,7 @@ export default function CreateEmployee() {
                         />
                         <FormField
                             control={form.control}
-                            name="roleId"
+                            name="departmentId"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Department</FormLabel>
