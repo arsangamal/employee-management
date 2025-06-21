@@ -45,6 +45,17 @@ This command will:
 - The UI will be available at `http://localhost:3000`.
 - The PgAdmin4 will be available at `http://localhost:8888`
 
+## extra configurations
+
+- PgAdmin4 credentails are `test@domain-name.com` and `123456`
+- Database credentails are 
+```bash
+POSTGRES_DATABASE=employee_management
+POSTGRES_USER=test
+POSTGRES_PASSWORD=test
+POSTGRES_HOST=employee_management_db
+```
+
 ## Stopping the Services
 
 To stop the containers, press `Ctrl+C` in the terminal, then run:

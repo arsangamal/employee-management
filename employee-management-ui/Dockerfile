@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm install -g next
 RUN npm install
 RUN npm rebuild lightningcss
 

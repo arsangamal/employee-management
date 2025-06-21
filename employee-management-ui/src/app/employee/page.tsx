@@ -37,7 +37,7 @@ export default function ListEmployees() {
       <PageHeader text="List of Employees" />
       <PageHeaderDescription text="Here you can find a list of all employees in the organization." />
 
-      <div className="container mx-auto py-10">
+      <div className="container py-10">
         <div className="flex justify-end">
           <Button onClick={goToCreateEmployee} variant="default" className="mb-4 cursor-pointer">
             <Plus className="mr-2 h-4 w-4" />

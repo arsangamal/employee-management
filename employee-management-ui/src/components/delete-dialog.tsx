@@ -21,7 +21,7 @@ export const DeleteDialog = ({ action, text }: { action: MouseEventHandler<HTMLE
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger>{text}</DialogTrigger>
+            <DialogTrigger className="cursor-pointer">{text}</DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
