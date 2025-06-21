@@ -1,0 +1,76 @@
+services:
+  api:
+    build:
+      context: ./employee-management-api
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./employee-management-api:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_DATABASE=employee_management
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_HOST=employee_management_db
+    restart: unless-stopped
+    command: npm run dev
+    depends_on:
+      - db
+    networks:
+      - default
+
+  frontend:
+    build:
+      context: ./employee-management-ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./employee-management-ui:/app
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://api:3001
+    restart: unless-stopped
+    command: npm run dev
+    depends_on:
+      - api
+    networks:
+      - default
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    depends_on:
+      - db
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  db:
+    container_name: employee_management_db
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: employee_management
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - default
+
+volumes:
+  pgdata:
+  pgadmin-data:
+
+networks:
+  default:
+    driver: bridge
